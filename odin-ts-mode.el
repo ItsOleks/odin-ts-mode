@@ -264,6 +264,7 @@
      ((parent-is "tuple_type")         parent-bol odin-ts-mode-indent-offset)
      ((parent-is "call_expression")    parent-bol odin-ts-mode-indent-offset)
      ((parent-is "switch_case")        parent-bol odin-ts-mode-indent-offset)
+     ((parent-is "switch_statement")   parent-bol 0)
 
      ;; Shamelessely stolen from c-ts-mode
      ((and (parent-is "block_comment") c-ts-common-looking-at-star)
