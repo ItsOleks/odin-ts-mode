@@ -264,7 +264,6 @@
      ((parent-is "tuple_type")         parent-bol odin-ts-mode-indent-offset)
      ((parent-is "call_expression")    parent-bol odin-ts-mode-indent-offset)
      ((parent-is "switch_case")        parent-bol odin-ts-mode-indent-offset)
-     ((parent-is "switch_statement")   parent-bol 0)
 
      ;; Shamelessely stolen from c-ts-mode
      ((and (parent-is "block_comment") c-ts-common-looking-at-star)
@@ -272,7 +271,9 @@
      (c-ts-common-comment-2nd-line-matcher
       c-ts-common-comment-2nd-line-anchor
       1)
-     ((parent-is "block_comment") prev-adaptive-prefix 0)))
+     ((parent-is "block_comment") prev-adaptive-prefix 0)
+
+     (catch-all parent 0)))
   "Tree-sitter indent rules for `odin-ts-mode`.")
 
 (defun odin-ts-mode-setup ()
