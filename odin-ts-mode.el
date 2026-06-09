@@ -247,6 +247,17 @@
     ("Function" "\\`overloaded_procedure_declaration\\'" nil nil))
   "Imenu settings used by `odin-ts-mode`.")
 
+;; Once again shamelessely stolen from c-ts-mode and slightly changed because the c parser
+;; has no distinciton between comment and block_comment nodes while the odin parser does
+(defun odin-ts-comment-2nd-line-matcher (_n parent &rest _)
+  "Matches if point is at the second line of a block comment.
+PARENT should be a block_comment node."
+  (and (equal (treesit-node-type parent) "block_comment")
+       (save-excursion
+         (forward-line -1)
+         (back-to-indentation)
+         (eq (point) (treesit-node-start parent)))))
+
 ;; Shamelessely ported from https://github.com/tree-sitter-grammars/tree-sitter-odin/blob/master/queries/indents.scm
 (defvar odin-ts-mode-indent-rules
   '((odin
@@ -255,7 +266,7 @@
      ((node-is "}") (and parent parent-bol) 0) ; We don't need to do all braces separately because we define indent relative to parent and not in blocks.
                                                ; I don't know why but some of the other -ts-modes dedent to (and parent parent-bol) and i'll do the same just in case
 
-     ((parent-is "block")              parent-bol odin-ts-mode-indent-offset)
+     ((parent-is "$block^")              parent-bol odin-ts-mode-indent-offset)
      ((parent-is "enum_declaration")   parent-bol odin-ts-mode-indent-offset)
      ((parent-is "union_declaration")  parent-bol odin-ts-mode-indent-offset)
      ((parent-is "struct_declaration") parent-bol odin-ts-mode-indent-offset)
@@ -268,9 +279,10 @@
      ;; Shamelessely stolen from c-ts-mode
      ((and (parent-is "block_comment") c-ts-common-looking-at-star)
       c-ts-common-comment-start-after-first-star -1)
-     (c-ts-common-comment-2nd-line-matcher
+     (odin-ts-comment-2nd-line-matcher
       c-ts-common-comment-2nd-line-anchor
       1)
+
      ((parent-is "block_comment") prev-adaptive-prefix 0)
 
      (catch-all parent-bol 0)))
