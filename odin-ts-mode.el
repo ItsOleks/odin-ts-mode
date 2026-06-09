@@ -273,7 +273,7 @@
       1)
      ((parent-is "block_comment") prev-adaptive-prefix 0)
 
-     (catch-all parent 0)))
+     (catch-all parent-bol 0)))
   "Tree-sitter indent rules for `odin-ts-mode`.")
 
 (defun odin-ts-mode-setup ()
