@@ -266,7 +266,7 @@ PARENT should be a block_comment node."
      ((node-is "}") (and parent parent-bol) 0) ; We don't need to do all braces separately because we define indent relative to parent and not in blocks.
                                                ; I don't know why but some of the other -ts-modes dedent to (and parent parent-bol) and i'll do the same just in case
 
-     ((parent-is "$block^")              parent-bol odin-ts-mode-indent-offset)
+     ((parent-is "^block$")            parent-bol odin-ts-mode-indent-offset)
      ((parent-is "enum_declaration")   parent-bol odin-ts-mode-indent-offset)
      ((parent-is "union_declaration")  parent-bol odin-ts-mode-indent-offset)
      ((parent-is "struct_declaration") parent-bol odin-ts-mode-indent-offset)
