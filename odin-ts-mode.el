@@ -267,10 +267,17 @@ PARENT should be a block_comment node."
                                                ; I don't know why but some of the other -ts-modes dedent to (and parent parent-bol) and i'll do the same just in case
 
      ((parent-is "^block$")            parent-bol odin-ts-mode-indent-offset)
+
+     ;; Declarations
      ((parent-is "enum_declaration")   parent-bol odin-ts-mode-indent-offset)
      ((parent-is "union_declaration")  parent-bol odin-ts-mode-indent-offset)
      ((parent-is "struct_declaration") parent-bol odin-ts-mode-indent-offset)
-     ((parent-is "struct")             parent-bol odin-ts-mode-indent-offset)
+
+     ;; Anonymous struct and union types
+     ((parent-is "union_type")         parent-bol odin-ts-mode-indent-offset)
+     ((parent-is "struct_type")        parent-bol odin-ts-mode-indent-offset)
+
+     ((parent-is "^struct$")           parent-bol odin-ts-mode-indent-offset)
      ((parent-is "parameters")         parent-bol odin-ts-mode-indent-offset)
      ((parent-is "tuple_type")         parent-bol odin-ts-mode-indent-offset)
      ((parent-is "call_expression")    parent-bol odin-ts-mode-indent-offset)
